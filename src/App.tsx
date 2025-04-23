@@ -2,8 +2,24 @@ import logo from './assets/logo.svg';
 import trash from './assets/trash.svg';
 import todo from './assets/todo.svg';
 import done from './assets/done.svg';
+import { useState } from 'react';
+
+export type Item = {
+  id: string;
+  name: string;
+  quantity: string;
+  completed: boolean;
+};
 
 function App() {
+
+  const [ items, setItems ] = useState<Item[]>([
+    { id: '1', name: 'Ovos de codorna', quantity: '1 dúzia', completed: false },
+    { id: '2', name: 'Margarina', quantity: '1 pote de 500 gramas', completed: false },
+    { id: '3', name: 'Tangerinas', quantity: '6 unidades', completed: true }
+  ]);
+
+
   return (
     <main className="max-w-2xl px-6 py-12 pb-20 mx-auto my-10 bg-white md:my-20 md:px-32 md:rounded-3xl">
       <header className="text-center">
