@@ -1,9 +1,9 @@
 import logo from './assets/logo.svg';
 import trash from './assets/trash.svg';
-import todo from './assets/todo.svg';
 import done from './assets/done.svg';
 import { useState } from 'react';
 import Item  from '../src/components/Item'
+import { nanoid } from 'nanoid';
 
 export type Item = {
   id: string;
@@ -15,11 +15,13 @@ export type Item = {
 function App() {
 
   const [ items, setItems ] = useState<Item[]>([
-    { id: '1', name: 'Pão francês', quantity: '2 dúzias', completed: false },
-    { id: '2', name: 'Margarina', quantity: '1 pote de 500 gramas', completed: false },
-    { id: '3', name: 'Tangerinas', quantity: '6 unidades', completed: true }
-  ]);
+    { id: nanoid(), name: 'Pão francês', quantity: '2 dúzias', completed: false },
+    { id: nanoid(), name: 'Margarina', quantity: '1 pote de 500 gramas', completed: false },
+    { id: nanoid(), name: 'Tangerinas', quantity: '6 unidades', completed: true }
+    ]);
 
+  const completedItems = items.filter(item => item.completed === true);
+  const notCompletedItems = items.filter(item => item.completed !== true);
 
   return (
     <main className="max-w-2xl px-6 py-12 pb-20 mx-auto my-10 bg-white md:my-20 md:px-32 md:rounded-3xl">
@@ -59,21 +61,9 @@ function App() {
         </button>
       </form>
       <section className="mt-10 space-y-3 ">
-        <Item item={items[0]} />
-        <Item item={items[0]} />
-        <article className="flex w-full gap-4">
-          <img src={todo} alt="#" />
-          <div className="flex-1">
-            <p>Maçã</p>
-            <p className="text-sm text-slate-400">500g</p>
-          </div>
-          <img
-            src={trash}
-            alt="ícone de lixeira"
-            className="justify-self-end"
-          />
-        </article>
-        <hr />
+        {notCompletedItems.map(item => (
+          <Item key={item.id} item={item}/>
+        ))}
       </section>
       <section className="mt-16 space-y-3">
         <h2 className="mb-10 text-3xl text-center font-display">
@@ -82,8 +72,11 @@ function App() {
         <article className="flex w-full gap-4">
           <img src={done} alt="#" />
           <div className="flex-1">
-            <p className="line-through text-slate-400">Leite</p>
-            <p className="text-sm line-through text-slate-400">3 Caixas</p>
+            <p className="line-through text-slate-400">
+              {completedItems.map(item => (
+                <Item key={item.id} item={item}/>
+              ))}
+            </p>
           </div>
           <img
             src={trash}
@@ -91,20 +84,6 @@ function App() {
             className="justify-self-end"
           />
         </article>
-        <hr />
-        <article className="flex w-full gap-4">
-          <img src={done} alt="#" />
-          <div className="flex-1">
-            <p className="line-through text-slate-400">Maçã</p>
-            <p className="text-sm line-through text-slate-400">500g</p>
-          </div>
-          <img
-            src={trash}
-            alt="ícone de lixeira"
-            className="justify-self-end"
-          />
-        </article>
-        <hr />
       </section>
     </main>
   );
