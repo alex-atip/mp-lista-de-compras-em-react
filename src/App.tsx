@@ -1,6 +1,4 @@
 import logo from './assets/logo.svg';
-import trash from './assets/trash.svg';
-import done from './assets/done.svg';
 import { useState } from 'react';
 import Item  from '../src/components/Item'
 import { nanoid } from 'nanoid';
@@ -23,6 +21,13 @@ function App() {
   const completedItems = items.filter(item => item.completed === true);
   const notCompletedItems = items.filter(item => item.completed !== true);
 
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    console.log("Formulário enviado!");
+
+
+  }
+
   return (
     <main className="max-w-2xl px-6 py-12 pb-20 mx-auto my-10 bg-white md:my-20 md:px-32 md:rounded-3xl">
       <header className="text-center">
@@ -35,7 +40,7 @@ function App() {
         </p>
         <hr className="w-1/3 mx-auto mt-6 mb-8" />
       </header>
-      <form className="flex gap-2">
+      <form className="flex gap-2" onSubmit={handleSubmit}>
         <div className="flex-shrink">
           <label htmlFor="name" className="block text-xs text-slate-400">
             Item
@@ -70,19 +75,11 @@ function App() {
           Itens já comprados
         </h2>
         <article className="flex w-full gap-4">
-          <img src={done} alt="#" />
           <div className="flex-1">
-            <p className="line-through text-slate-400">
               {completedItems.map(item => (
                 <Item key={item.id} item={item}/>
               ))}
-            </p>
           </div>
-          <img
-            src={trash}
-            alt="ícone de lixeira"
-            className="justify-self-end"
-          />
         </article>
       </section>
     </main>
