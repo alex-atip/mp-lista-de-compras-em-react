@@ -3,6 +3,7 @@ import trash from './assets/trash.svg';
 import todo from './assets/todo.svg';
 import done from './assets/done.svg';
 import { useState } from 'react';
+import Item  from '../src/components/Item'
 
 export type Item = {
   id: string;
@@ -14,7 +15,7 @@ export type Item = {
 function App() {
 
   const [ items, setItems ] = useState<Item[]>([
-    { id: '1', name: 'Ovos de codorna', quantity: '1 dúzia', completed: false },
+    { id: '1', name: 'Pão francês', quantity: '2 dúzias', completed: false },
     { id: '2', name: 'Margarina', quantity: '1 pote de 500 gramas', completed: false },
     { id: '3', name: 'Tangerinas', quantity: '6 unidades', completed: true }
   ]);
@@ -58,19 +59,8 @@ function App() {
         </button>
       </form>
       <section className="mt-10 space-y-3 ">
-        <article className="flex w-full gap-4">
-          <img src={todo} alt="#" />
-          <div className="flex-1">
-            <p>Leite</p>
-            <p className="text-sm text-slate-400">3 Caixas</p>
-          </div>
-          <img
-            src={trash}
-            alt="ícone de lixeira"
-            className="justify-self-end"
-          />
-        </article>
-        <hr />
+        <Item item={items[0]} />
+        <Item item={items[0]} />
         <article className="flex w-full gap-4">
           <img src={todo} alt="#" />
           <div className="flex-1">
