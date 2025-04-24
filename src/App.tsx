@@ -1,5 +1,5 @@
 import logo from './assets/logo.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Item  from '../src/components/Item'
 import { nanoid } from 'nanoid';
 
@@ -21,10 +21,29 @@ function App() {
   const completedItems = items.filter(item => item.completed === true);
   const notCompletedItems = items.filter(item => item.completed !== true);
 
-  function handleSubmit(event: React.FormEvent) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("Formulário enviado!");
 
+    const formEl = event.currentTarget;
+
+    const formData = new FormData(formEl);
+
+    const name = formData.get("name") as string;
+    const quantity = formData.get("quantity") as string;
+
+    const item: Item = {
+      id: nanoid(),
+      name,
+      quantity,
+      completed: false,
+    };
+
+    const newItems = [item, ...items];
+    setItems(newItems);
+
+    formEl.reset()
+
+    console.log({name, quantity})
 
   }
 
@@ -47,6 +66,7 @@ function App() {
           </label>
           <input
             type="text"
+            name='name'
             id="name"
             className="block w-full px-3 py-2 border rounded-lg border-slate-300 text-slate-700"
           />
@@ -57,6 +77,7 @@ function App() {
           </label>
           <input
             type="text"
+            name='quantity'
             id="quantity"
             className="block w-full px-3 py-2 border rounded-lg border-slate-300 text-slate-700"
           />
