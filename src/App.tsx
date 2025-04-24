@@ -18,6 +18,8 @@ function App() {
     { id: nanoid(), name: 'Tangerinas', quantity: '6 unidades', completed: true }
     ]);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const completedItems = items.filter(item => item.completed === true);
   const notCompletedItems = items.filter(item => item.completed !== true);
 
@@ -45,6 +47,8 @@ function App() {
 
     console.log({name, quantity})
 
+    inputRef.current && inputRef.current.focus();
+
   }
 
   return (
@@ -65,6 +69,7 @@ function App() {
             Item
           </label>
           <input
+            ref={inputRef}
             type="text"
             name='name'
             id="name"
